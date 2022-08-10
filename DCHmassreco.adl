@@ -1,0 +1,53 @@
+object taus
+  take Jet
+  select TauTag(Jet) == 1
+
+define tauA = taus[-1]
+define tauB = taus[-2]
+define tauC = taus[-3]
+define tauD = taus[-4]
+
+define Hpp : tauA tauB
+define Hmm : tauC tauD
+
+define chi = m(Hpp) - m(Hmm)
+define chiQ = q(tauA) - q(tauB)
+region twotaus
+  select      ALL                   
+  select      Size(taus) == 2       
+  select      dR(tauA,tauB) ~= 2
+  histo       HppMassA,"DCH mass (GeV)",50,0,1000,m(Hpp)
+  select      q(tauA) == q(tauB)
+  histo       HppMassB,"DCH mass (GeV)",50,0,1000,m(Hpp)
+
+region threetaus
+  select      ALL
+  select      Size(taus) == 3 #  select      dR(tauA,tauB) ~= 0
+  select      chiQ ~= 0
+  histo       DCHMassA,"DCH mass (GeV)",50,0,1000,m(Hpp)
+  histo       DCHdRA,"DCH dR",20,0,6,dR(tauA,tauB)
+  histo       DHCdEtaA,"DCH eta",20,-4,4,Eta(Hpp)
+  
+region fourtaus
+  select      ALL                   
+  select      Size(taus) >= 4       
+  select      chi ~= 0
+  histo       HmmChargeA,"Hmm charge",7,-3,3,q(Hmm)	  
+  histo       HmmMassA,"Hmm mass (GeV)",50,0,1000,m(Hmm)
+  histo       HppMassA,"Hpp mass (GeV)",50,0,1000,m(Hpp)  
+  select      q(Hmm) == -2 AND q(Hpp) == 2
+  histo       HmmChargeB,"Hmm charge",7,-3,3,q(Hmm)	    
+  histo       HmmMassB,"Hmm mass (GeV)",50,0,1000,m(Hmm)
+  histo       HppMassB,"Hpp mass (GeV)",50,0,1000,m(Hpp)  
+  
+
+# two tau channel, reco one higgs from both taus
+# require twco taus have same charge, plot again
+
+# three tau channel: 
+  
+
+
+
+
+
